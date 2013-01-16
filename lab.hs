@@ -13,3 +13,8 @@ pythag2 a b =
 	--b :: Floating
 	sqrt ( square' a + square' b)
 
+isEven :: Integer -> Bool
+isEven x 
+	| x `mod` 2 == 0 = True
+	| otherwise 	 = False
+
