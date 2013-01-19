@@ -18,3 +18,6 @@ isEven x
 	| x `mod` 2 == 0 = True
 	| otherwise 	 = False
 
+factorial :: Integer -> Integer
+factorial x = foldr (*) 1 [x,x-1..1]
+		-- foldr (binary function to perform), starting value, list to perform it on
