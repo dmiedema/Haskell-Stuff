@@ -24,7 +24,7 @@ createTuple :: String -> (String, String)
 createTuple string = List.splitAt (head (elemIndices ' ' string)) string
 
 getValues :: String -> Int
-getValues string = read (snd (List.splitAt (head (elemIndices ' ' string)) string)) :: Int
+getValues split = read (snd (createTuple split)) :: Int
 
 createNode :: (String,String) -> Node
 createNode split =  Node {activity = (fst split), value = (read (snd (split)) :: Int), used = False}
