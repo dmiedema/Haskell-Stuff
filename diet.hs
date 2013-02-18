@@ -1,10 +1,11 @@
 import Control.Monad
-import Data.List
+import Data.List as List
+import Data.Sequence as Seq
 
 data Node = Node { activity :: String,
 					value :: Int,
 					used :: Bool
-					} deriving (Show)
+					} deriving (Show, Eq, Ord)
 
 main = do
 	ln <- getLine
@@ -12,33 +13,21 @@ main = do
 	activities <- forM [count, count-1..1] (\a -> do
 		activity <- getLine
 		return activity)
-	let listOfActivites = map createTuple (sort activities)
-	let nodes = map createNode listOfActivites
-	print nodes
-
-	--print listOfActivites
-	--print values
-
-	--let solution = findSolution values
-	--print solution
+	let nodes = fromList (map createNode (map createTuple (List.sort activities)))
+	--print activities
+	let paritionedValues = List.partition (>0) (map getValues activities)
+	print paritionedValues
+	--print nodes
+	--print (Seq.length nodes)
 
 createTuple :: String -> (String, String)
-createTuple string = splitAt (head (elemIndices ' ' string)) string
+createTuple string = List.splitAt (head (elemIndices ' ' string)) string
+
+getValues :: String -> Int
+getValues string = read (snd (List.splitAt (head (elemIndices ' ' string)) string)) :: Int
 
 createNode :: (String,String) -> Node
 createNode split =  Node {activity = (fst split), value = (read (snd (split)) :: Int), used = False}
-	--split = splitAt (head (elemIndices ' ' string)) string
-	
 
-
---findSolution :: [Int] -> [Int]
---findSolution list = let tuple = partition (>0) list
---	| fst tuple == []
---	| snd tuple == []
-
-		--negatives = snd tuple
-	--in negatives
-
---filter (== 0) (snd $ mapAccumL (\ x y -> (x,x+y)) 2 [1,2,3,-3,-4,-1])
 
 -- A* - each value is a node, goal is 0	
