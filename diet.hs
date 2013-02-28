@@ -3,9 +3,9 @@ import Data.List as List
 import Data.Sequence as Seq
 
 data Node = Node { activity :: String,
-					value :: Int,
-					used :: Bool
-					} deriving (Show, Eq, Ord)
+			value :: Int,
+			used :: Bool
+			} deriving (Show, Eq, Ord)
 
 main = do
 	ln <- getLine
@@ -15,8 +15,14 @@ main = do
 		return activity)
 	let nodes = fromList (map createNode (map createTuple (List.sort activities)))
 	let paritionedValues = List.partition (>0) (map getValues activities)
+	let listOfValues = map getValues activities
 	print paritionedValues
 	print (checkOppositeValues paritionedValues)
+		{- running subsequence (permutations) will be a pain to work with.
+		 Might be easier to permute and run subsequence indiviually.
+		 I don't know.
+		-}
+	let holyCrapThisIsHuge =  (permutations listOfValues)
 	--print nodes
 	--print (Seq.length nodes)
 
@@ -33,8 +39,20 @@ checkOppositeValues :: ([Int], [Int]) -> Bool
 checkOppositeValues tuple = 
 	Seq.length (Seq.fromList(fst tuple ++ (map (abs) (snd tuple)))) == 
 		Seq.length (Seq.fromList( List.nub (fst tuple ++ (map (abs) (snd tuple)))))
+ 
+ --- this is possibly the scaries thing ive ever made. Wow this is going to be terrible.
+-- subsequence (permutations list) is a horrible, horrible idea. but it will bruteforce it.
 
+--tryEverything :: [Int] -> [Int]
+--tryEverything bigList =
 
+ -- Sequence of Nodes, current value, number of nodes used -> Returns Sequence of Nodes
+iterateThroughList :: (Seq Node seqN) => seqN -> Int -> Int -> seqN
+iterateThroughList seqN currentValue numberOfNodesUsed
+	| empty seqN = fromList ["No Solution"]
+	| currentValue == 0 -- find all nodes in seqN that have used==True
+	| (numberOfNodesUsed == length seqN) && (currentValue /= 0) = fromList ["No Solution"] -- try again by dropping a node
+	| otherwise -- do this again, find a node that is used==False and apply its value to currentValue
 
 
 	-- Merge lists and covert all number to positive numbers
