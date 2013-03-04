@@ -54,7 +54,7 @@ iterateThroughList seqN currentValue numberOfNodesUsed
 	| (numberOfNodesUsed == length seqN) && (currentValue /= 0) = fromList ["No Solution"] -- try again by dropping a node
 	| otherwise -- do this again, find a node that is used==False and apply its value to currentValue
 
-
+-- made changes holy crap did i make changes. WOOT CHANGES
 	-- Merge lists and covert all number to positive numbers
 	-- fst tuplelist ++ (map (abs) (snd tuplelist))
 
