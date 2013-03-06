@@ -23,6 +23,8 @@ main = do
 		 I don't know.
 		-}
 	let holyCrapThisIsHuge =  (permutations listOfValues)
+	print (map mapOnPermutations holyCrapThisIsHuge)
+	print "derpy"
 	--print nodes
 	--print (Seq.length nodes)
 
@@ -47,18 +49,26 @@ checkOppositeValues tuple =
 --tryEverything bigList =
 
  -- Sequence of Nodes, current value, number of nodes used -> Returns Sequence of Nodes
-iterateThroughList :: (Seq Node seqN) => seqN -> Int -> Int -> seqN
-iterateThroughList seqN currentValue numberOfNodesUsed
-	| empty seqN = fromList ["No Solution"]
-	| currentValue == 0 -- find all nodes in seqN that have used==True
-	| (numberOfNodesUsed == length seqN) && (currentValue /= 0) = fromList ["No Solution"] -- try again by dropping a node
-	| otherwise -- do this again, find a node that is used==False and apply its value to currentValue
+--iterateThroughList :: (Seq Node seqN) => seqN -> Int -> Int -> seqN
+--iterateThroughList seqN currentValue numberOfNodesUsed
+--	| empty seqN = fromList ["No Solution"]
+--	| currentValue == 0 -- find all nodes in seqN that have used==True
+--	| (numberOfNodesUsed == length seqN) && (currentValue /= 0) = fromList ["No Solution"] -- try again by dropping a node
+--	| otherwise -- do this again, find a node that is used==False and apply its value to currentValue
 
-mapOnPermutations :: [[Int]] -> [Int]
-mapOnPermutations permutedList = 
+mapOnPermutations :: [Int] -> [Int]
+mapOnPermutations [] = [] 
+mapOnPermutations permutedList = addItemsInList 0 permutedList []
 
-addItemsInList :: [Int] -> Int -> [Int]
-addItemsInList list total = 
+addItemsInList :: Int -> [Int] -> [Int] -> [Int]
+addItemsInList total list workingList
+	| (total /= 0 && list == []) = []
+	| (total == 0  && list /= []) = workingList
+	| otherwise = addItemsInList (sum workingList) (tail list) (workingList ++ ((head list) : []))
+
+
+
+-- addItemsInList list total = 
 
 	-- Merge lists and covert all number to positive numbers
 	-- fst tuplelist ++ (map (abs) (snd tuplelist))
