@@ -23,8 +23,17 @@ main = do
 		 I don't know.
 		-}
 	let holyCrapThisIsHuge =  (permutations listOfValues)
-	print (map mapOnPermutations holyCrapThisIsHuge)
-	print "derpy"
+	print holyCrapThisIsHuge
+	--let solutionMaybe = (map mapOnPermutations holyCrapThisIsHuge)
+	let solutionMaybe = mapOnPermutations holyCrapThisIsHuge
+	print solutionMaybe
+	--let checkcheck =  fromList (List.filter (/= []) solutionMaybe)
+	--let printers = "" ++ case checkcheck of [] -> print "No solution"
+	--										[x] -> print "SOLUTION FOUND!"
+	--let printers = checkcheck == [] print "NO SOLUTION"
+	--checkcheck /= [] print "SOLUTION"
+	--print (Seq.length checkcheck)
+	--print "derpy" 
 	--print nodes
 	--print (Seq.length nodes)
 
@@ -56,15 +65,19 @@ checkOppositeValues tuple =
 --	| (numberOfNodesUsed == length seqN) && (currentValue /= 0) = fromList ["No Solution"] -- try again by dropping a node
 --	| otherwise -- do this again, find a node that is used==False and apply its value to currentValue
 
-mapOnPermutations :: [Int] -> [Int]
-mapOnPermutations [] = [] 
-mapOnPermutations permutedList = addItemsInList 0 permutedList []
+mapOnPermutations :: [[Int]]  -> [Int]
+mapOnPermutations fullList  
+	| (result /= []) =  result
+	| (fullList /= [[]]) = mapOnPermutations (tail fullList)
+	| otherwise = []
+	where result = addItemsInList (head fullList) []
 
-addItemsInList :: Int -> [Int] -> [Int] -> [Int]
-addItemsInList total list workingList
-	| (total /= 0 && list == []) = []
-	| (total == 0  && list /= []) = workingList
-	| otherwise = addItemsInList (sum workingList) (tail list) (workingList ++ ((head list) : []))
+addItemsInList :: [Int] -> [Int] -> [Int]
+addItemsInList list workingList
+	| list == [] || (list == [] && workingList == []) = [] 
+	| ((sum workingList) /= 0 && list == []) = []
+	| ((sum workingList) == 0 && workingList /= []) = workingList
+	| otherwise = addItemsInList (tail list) (workingList ++ ((head list) : []))
 
 
 
