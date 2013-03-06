@@ -1,0 +1,5 @@
+4
+first-thing 110
+second-thing -100
+third-thing -50
+fourth -10
