@@ -16,14 +16,14 @@ main = do
 	let nodes = fromList (map createNode (map createTuple (List.sort activities)))
 	let paritionedValues = List.partition (>0) (map getValues activities)
 	let listOfValues = map getValues activities
-	print paritionedValues
-	print (checkOppositeValues paritionedValues)
+	--print paritionedValues
+	--print (checkOppositeValues paritionedValues)
 		{- running subsequence (permutations) will be a pain to work with.
 		 Might be easier to permute and run subsequence indiviually.
 		 I don't know.
 		-}
 	let holyCrapThisIsHuge =  (permutations listOfValues)
-	print holyCrapThisIsHuge
+	--print holyCrapThisIsHuge
 	--let solutionMaybe = (map mapOnPermutations holyCrapThisIsHuge)
 	let solutionMaybe = mapOnPermutations holyCrapThisIsHuge
 	print solutionMaybe
