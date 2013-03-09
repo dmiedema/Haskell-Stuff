@@ -1,6 +1,7 @@
 import Control.Monad
 import Data.List as List
 import Data.Sequence as Seq
+import Control.Parallel.Strategies
 
 data Node = Node { activity :: String,
 			value :: Int,
